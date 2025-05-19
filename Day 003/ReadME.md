@@ -42,7 +42,6 @@ This operation can be distributed across thousands of GPU threads.
 
 ## Sequential CPU Version
 
-```cpp
 void vecadd(float* x, float* y, float* z, int N) {
     for(int i = 0; i < N; ++i) {
         z[i] = x[i] + y[i];
@@ -58,9 +57,7 @@ cudaMemcpy transfers data between CPU and GPU
 cudaFree deallocates GPU memory
 
 Memory Management Example
-cpp
-Copy
-Edit
+
 float *x_d, *y_d, *z_d;
 cudaMalloc((void**)&x_d, N * sizeof(float));
 cudaMalloc((void**)&y_d, N * sizeof(float));
@@ -86,22 +83,16 @@ Grid – a group of blocks
 
 Each thread gets a unique index using:
 
-cpp
-Copy
-Edit
+
 int i = blockDim.x * blockIdx.x + threadIdx.x;
 Launching the Kernel
-cpp
-Copy
-Edit
+
 const unsigned int threadsPerBlock = 256;
 const unsigned int blocks = (N + threadsPerBlock - 1) / threadsPerBlock;
 
 vecadd_kernel<<<blocks, threadsPerBlock>>>(x_d, y_d, z_d, N);
 CUDA Kernel for Vector Addition
-cpp
-Copy
-Edit
+
 __global__ void vecadd_kernel(float* x, float* y, float* z, int N) {
     int i = blockDim.x * blockIdx.x + threadIdx.x;
     if (i < N) {
@@ -121,9 +112,7 @@ __host__: runs and is called on the host (default)
 
 You can combine them if needed:
 
-cpp
-Copy
-Edit
+
 __host__ __device__ float add(float a, float b) {
     return a + b;
 }
@@ -137,10 +126,7 @@ cudaError_t err = cudaGetLastError();
 if (err != cudaSuccess) {
     printf("CUDA Error: %s\n", cudaGetErrorString(err));
 }
-Full Program
-cpp
-Copy
-Edit
+
 #include <stdio.h>
 #include <cuda_runtime.h>
 
