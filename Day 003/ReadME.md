@@ -119,9 +119,6 @@ __host__ __device__ float add(float a, float b) {
 Error Handling in CUDA
 Always check for CUDA errors:
 
-cpp
-Copy
-Edit
 cudaError_t err = cudaGetLastError();
 if (err != cudaSuccess) {
     printf("CUDA Error: %s\n", cudaGetErrorString(err));
